@@ -1,0 +1,30 @@
+/*
+  Dedicated modal backdrop layer.
+  Dim + blur live here on a static element with NO children, so dynamic modal
+  content changes never trigger a re-rasterization of the blur (no flash).
+  The blur still samples the movie grid behind it, keeping focus on the modal
+  while the page stays faintly visible.
+*/
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  animation: overlayFadeIn 0.25s ease-out;
+
+  /* Compositing hardening: pin the overlay to its own GPU backing layer so its
+     blurred output is cached and reused across frames. Without this, sibling
+     repaints (the AI text swap, the cross-origin YouTube iframe) invalidate the
+     backdrop-filter raster and the unfiltered page shows for a frame (flicker). */
+  transform: translateZ(0);
+  will-change: backdrop-filter;
+  backface-visibility: hidden;
+  contain: strict;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

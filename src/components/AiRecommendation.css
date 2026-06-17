@@ -1,0 +1,41 @@
+/*
+  AI Recommendation section - fixed height to prevent layout shift.
+  NOTE: intentionally no infinite animation here. A per-frame opacity animation
+  (pulse) repeatedly invalidates the modal's backdrop-filter blur layer, causing
+  a whole-screen flicker while loading. Static loading text + fixed min-height
+  keeps the layout stable without triggering that repaint.
+*/
+.modal-ai-section {
+  margin-top: 28px;
+  padding: 22px;
+  background-color: rgba(59, 130, 246, 0.08);
+  border-radius: 10px;
+  border-left: 4px solid var(--color-accent);
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-ai-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 14px 0;
+  color: var(--color-text-primary);
+}
+
+.modal-ai-text {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  margin: 0;
+  flex: 1;
+}
+
+.modal-ai-loading {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  margin: 0;
+  flex: 1;
+}

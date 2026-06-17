@@ -1,0 +1,88 @@
+/*
+  Header Component Visual Intent:
+  Everything in one horizontal line like Alibaba - Logo | Sort | Search
+  Clean, minimal with all controls accessible from the header.
+*/
+
+.header {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 16px 0;
+  margin-bottom: 24px;
+}
+
+.header__content {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.header__title {
+  font-family: var(--font-family-heading);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-text-primary);
+  letter-spacing: -0.03em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* Controls container - Sort and Search side by side */
+.header__controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  max-width: 900px;
+}
+
+/* Tablet and up */
+@media (min-width: 600px) {
+  .header {
+    padding: 18px 0;
+  }
+
+  .header__content {
+    padding: 0 24px;
+    gap: 24px;
+  }
+
+  .header__title {
+    font-size: 2rem;
+    gap: 10px;
+  }
+
+  .header__controls {
+    gap: 20px;
+  }
+}
+
+/* Desktop and up */
+@media (min-width: 1024px) {
+  .header {
+    padding: 20px 0;
+  }
+
+  .header__content {
+    gap: 32px;
+    flex-wrap: nowrap;
+  }
+
+  .header__title {
+    font-size: 2.25rem;
+  }
+
+  .header__controls {
+    gap: 24px;
+    max-width: 1000px;
+  }
+}

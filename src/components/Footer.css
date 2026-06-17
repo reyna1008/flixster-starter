@@ -1,0 +1,86 @@
+/*
+  Footer Component Visual Intent:
+  Subtle footer that provides attribution without competing with content.
+  Dark background with muted text creates visual endpoint.
+*/
+
+.footer {
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  padding: 40px 0;
+  margin-top: 80px;
+}
+
+.footer__content {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer__text {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.footer__attribution {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.footer__links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.footer__link {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  transition: color var(--transition-fast);
+  font-weight: 500;
+}
+
+.footer__link:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+}
+
+.footer__link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.footer__separator {
+  color: var(--color-border);
+  user-select: none;
+}
+
+/* Tablet and up */
+@media (min-width: 600px) {
+  .footer {
+    padding: 48px 0;
+  }
+
+  .footer__content {
+    padding: 0 24px;
+    gap: 16px;
+  }
+
+  .footer__text,
+  .footer__attribution,
+  .footer__link {
+    font-size: 1rem;
+  }
+}

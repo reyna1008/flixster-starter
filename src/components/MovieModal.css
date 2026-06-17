@@ -1,0 +1,249 @@
+/*
+  MovieModal Component Visual Intent:
+  Modal should feel immersive and cinematic, drawing focus to the selected movie.
+  KEEP: Dark semi-transparent overlay creates depth and focus. Modal content
+  elevated with shadow. Smooth fade-in animation enhances the experience.
+  Clear visual hierarchy with large title, metadata row, then overview.
+*/
+
+/* Transparent positioning/scroll layer above the .modal-overlay (Backdrop).
+   The dim + blur now live on .modal-overlay so dynamic content here doesn't
+   re-rasterize the filter (no flash). This layer centers the modal, provides
+   the click-to-close hit area, and confines scrolling to the modal. */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+/* KEEP: Modal content elevated with shadow */
+.modal-content {
+  background-color: var(--color-surface);
+  border-radius: 16px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: var(--shadow-xl);
+  animation: modalSlideIn 0.3s ease-out;
+
+  /* Own stacking context + confined repaints so content changes (AI text swap,
+     iframe load) don't bleed into the .modal-overlay backdrop-filter sampling.
+     isolation (not transform) avoids breaking the absolutely-positioned close button. */
+  isolation: isolate;
+  contain: paint;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Close button - accessible with minimum touch target */
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: var(--color-text-primary);
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+}
+
+.modal-close:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+  transform: scale(1.05);
+}
+
+.modal-close:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Backdrop image */
+.modal-backdrop-image {
+  width: 100%;
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px 12px 0 0;
+  position: relative;
+}
+
+.modal-backdrop-image::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, var(--color-surface));
+}
+
+/* Details section */
+.modal-details {
+  padding: 28px;
+}
+
+.modal-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 18px 0;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.modal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-bottom: 18px;
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+}
+
+.modal-rating {
+  color: var(--color-star);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.modal-runtime,
+.modal-date {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+/* Genres - informational only, no hover effects */
+.modal-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.genre-tag {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: var(--color-accent);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: default;
+}
+
+/* Overview section */
+.modal-overview h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 14px 0;
+  color: var(--color-text-primary);
+}
+
+.modal-overview p {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Trailer + AI Recommendation styles live in Trailer.css / AiRecommendation.css
+   alongside their now-separated components. */
+
+/* Loading state */
+.modal-loading {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 1.2rem;
+  color: #888;
+}
+
+/* Error state */
+.modal-error {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 1.1rem;
+  color: #ff6b6b;
+  background-color: rgba(255, 107, 107, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  margin: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .modal-backdrop {
+    padding: 0;
+    align-items: flex-start;
+  }
+
+  .modal-content {
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .modal-backdrop-image {
+    height: 250px;
+    border-radius: 0;
+  }
+
+  .modal-details {
+    padding: 16px;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+  }
+
+  .modal-meta {
+    font-size: 0.85rem;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-backdrop-image {
+    height: 200px;
+  }
+
+  .modal-title {
+    font-size: 1.3rem;
+  }
+
+  .modal-close {
+    width: 36px;
+    height: 36px;
+    font-size: 1.75rem;
+  }
+}
